@@ -1,6 +1,8 @@
+from ast import Try
 from curses import newpad
 import random
 import hashlib
+from turtle import goto
 import uuid
 
 
@@ -11,9 +13,9 @@ class PasswordManager:
         self.password = ''
         self.charactors = '1234567890abcdefghijklmnopqrsvutwxyz!@#$%^&*'
 
-    def create_password(self):
+    def create_password(self, range_length):
         '''Create password simple'''
-        for i in range(22):
+        for i in range(range_length):
             num = random.randint(0, len(self.charactors))
             self.password += self.charactors[num]
         return self.password
@@ -32,6 +34,24 @@ class PasswordManager:
 
 if __name__ == '__main__':
     pm = PasswordManager()
-    gusserNumber = pm.create_password()
-    pm.write_password()
-    print(gusserNumber)
+    password = ''
+    while (True):
+        try:
+            # Get number of charactors
+            num = int(input('How many charactors do you want for password: '))
+            # Check count of number
+            if num < 8:
+                raise Exception('Password must be at least 8 charactors')
+            # Create password
+            password = pm.create_password(num)
+            # Write password to file
+            pm.write_password()
+            break
+        except ValueError:
+            print('Please enter a number')
+            continue
+        except Exception as e:
+            print(e)
+            continue
+
+    print(password)
