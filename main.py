@@ -27,6 +27,7 @@ class PasswordManager:
 
     def convert_to_hash(self):
         '''Convert password to hash'''
+        # Incomplete
         salt = 'abc'
         self.password = hashlib.sha512(self.password.encode(
             'utf-8') + salt.encode('utf-8')).hexdigest()
