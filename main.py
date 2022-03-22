@@ -6,9 +6,10 @@ import uuid
 
 class PasswordManager:
 
-    def __init__():
+    def __init__(self):
         '''Initialize'''
-        pass
+        self.password = ''
+        self.charactors = '1234567890abcdefghijklmnopqrsvutwxyz!@#$%^&*'
 
     def create_password(self):
         '''Create password simple'''
@@ -27,11 +28,6 @@ class PasswordManager:
         salt = 'abc'
         self.password = hashlib.sha512(self.password.encode(
             'utf-8') + salt.encode('utf-8')).hexdigest()
-
-    def __init__(self):
-        '''Initialize'''
-        self.password = ''
-        self.charactors = '1234567890abcdefghijklmnopqrsvutwxyz!@#$%^&*'
 
 
 if __name__ == '__main__':
