@@ -1,9 +1,5 @@
-from ast import Try
-from curses import newpad
 import random
 import hashlib
-from turtle import goto
-import uuid
 
 
 class PasswordManager:
@@ -21,16 +17,17 @@ class PasswordManager:
         return self.password
 
     def write_password(self):
-        '''Write passowrd in password.txt'''
+        '''Write password in password.txt'''
         with open('password.txt', 'w') as f:
-            f.write(self.password)
+            # Encode password
+            hash = self.encode(self.password)
+            # Write password to file
+            f.write(hash)
 
-    def convert_to_hash(self):
+    def encode(self, password):
         '''Convert password to hash'''
-        # Incomplete
-        salt = 'abc'
-        self.password = hashlib.sha512(self.password.encode(
-            'utf-8') + salt.encode('utf-8')).hexdigest()
+        salt = hashlib.sha256(password.encode('utf-8')).hexdigest()
+        return salt
 
 
 if __name__ == '__main__':
