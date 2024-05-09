@@ -7,12 +7,13 @@ class PasswordManager:
     def __init__(self):
         '''Initialize'''
         self.password = ''
-        self.charactors = '1234567890abcdefghijklmnopqrsvutwxyz!@#$%^&*'
+        self.charactors = '1234567890abcdefghijklmnopqrsvutwxyz'
 
     def create_password(self, range_length):
         '''Create password simple'''
+        self.password = ''
         for i in range(range_length):
-            num = random.randint(0, len(self.charactors))
+            num = random.randint(0, (len(self.charactors) - 1))
             self.password += self.charactors[num]
         return self.password
 
@@ -42,9 +43,8 @@ if __name__ == '__main__':
                 raise Exception('Password must be at least 8 charactors')
             # Create password
             password = pm.create_password(num)
-            # Write password to file
-            pm.write_password()
-            break
+            print(password)
+            continue
         except ValueError:
             print('Please enter a number')
             continue
