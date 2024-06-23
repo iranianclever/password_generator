@@ -21,14 +21,20 @@ class PasswordManager:
         '''Write password in password.txt'''
         with open('password.txt', 'w') as f:
             # Encode password
-            hash = self.encode(self.password)
+            hash = self.convert_to_sha256(self.password)
             # Write password to file
             f.write(hash)
 
-    def encode(self, password):
+    def convert_to_sha256(self, password):
         '''Convert password to hash'''
         salt = hashlib.sha256(password.encode('utf-8')).hexdigest()
         return salt
+
+    def convert_to_md5(self, password):
+        '''Convert password to md5'''
+        salt = hashlib.md5(password.encode('utf-8')).hexdigest()
+        return salt
+
 
 
 if __name__ == '__main__':
@@ -36,19 +42,32 @@ if __name__ == '__main__':
     password = ''
     while (True):
         try:
-            print('Enter your sign to choose the type of password creation. (n) -> normal password, (m) -> password with md5, (e) -> exit.')
+            print('Enter your sign to choose the type of password creation. (n) -> normal password, (m) -> password with md5, (s) -> password with sha256, (e) -> exit.')
             sign = input('What\'s your sign: ')
             if sign == 'n':
                 # Get number of characters
                 num = int(input('How many characters do you want for password: '))
-                # Check count of number
-                if num < 8:
-                    raise Exception('Password must be at least 8 characters')
                 # Create password
                 password = pm.create_password(num)
                 print(password)
             elif sign == 'm':
-                pass
+                # Get number of characters
+                num = int(input('How many characters do you want for password: '))
+                # Create password
+                raw_password = pm.create_password(num)
+                # Convert password to md5
+                password = pm.convert_to_md5(raw_password)
+                print('Raw: ' + raw_password)
+                print('Md5: ' + password)
+            elif sign == 's':
+                # Get number of characters
+                num = int(input('How many characters do you want for password: '))
+                # Create password
+                raw_password = pm.create_password(num)
+                # Convert password to sha256
+                password = pm.convert_to_sha256(raw_password)
+                print('Raw: ' + raw_password)
+                print('Sha256: ' + password)
             elif sign == 'e':
                 break
             continue
