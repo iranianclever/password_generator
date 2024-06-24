@@ -7,7 +7,7 @@ class PasswordManager:
     def __init__(self):
         '''Initialize'''
         self.password = ''
-        self.characters = '1234567890abcdefghijklmnopqrsvutwxyz!@#$%^&*'
+        self.characters = '1234567890abcdefghijklmnopqrsvutwxyz'
 
     def create_password(self, range_length):
         '''Create password simple'''
@@ -34,7 +34,6 @@ class PasswordManager:
         '''Convert password to md5'''
         salt = hashlib.md5(password.encode('utf-8')).hexdigest()
         return salt
-
 
 
 if __name__ == '__main__':
