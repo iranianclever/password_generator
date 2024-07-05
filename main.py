@@ -1,5 +1,7 @@
 import random
 import hashlib
+import config
+import requests
 
 
 class PasswordManager:
@@ -84,6 +86,18 @@ if __name__ == '__main__':
                 print('Sha256: ' + password)
                 print('Password is written.')
                 print('\n\r')
+            elif sign == 'swr':
+                # Get number of characters
+                num = int(input('How many characters do you want for password: '))
+                # Create password
+                raw_password = pm.create_password(num)
+                # Convert password to sha256
+                password = pm.convert_to_sha256(raw_password)
+                pm.write_password(raw_password)
+                print('\n\r')
+                print('Password: ' + raw_password)
+                print('Sha256: ' + password)
+                print('Password is written and send.')
             elif sign == 'e':
                 break
             else:
