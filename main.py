@@ -35,13 +35,23 @@ class PasswordManager:
         salt = hashlib.md5(password.encode('utf-8')).hexdigest()
         return salt
 
+    def send_request_data(self, password):
+        '''Send password with token to request url'''
+        data = {
+            'token': config.API_REQUEST_TOKEN,
+            'new_license': password
+        }
+        print(data)
+        res = requests.post(url=config.API_REQUEST_URL, data=data)
+        print(res.text)
+
 
 if __name__ == '__main__':
     pm = PasswordManager()
     password = ''
     while (True):
         try:
-            print('Enter your sign to choose the type of password creation. (n) -> normal password, (m) -> password with md5, (s) -> password with sha256, (sw) -> password with sha256 and write to passwords.txt (e) -> exit.')
+            print('Enter your sign to choose the type of password creation. (n) -> normal password, (m) -> password with md5, (s) -> password with sha256, (sw) -> password with sha256 and write to passwords.txt, (swr) -> password with sha256 and write to passwords.txt and send to api url, (e) -> exit.')
             sign = input('What\'s your sign: ')
             if sign == 'n':
                 # Get number of characters
@@ -97,7 +107,9 @@ if __name__ == '__main__':
                 print('\n\r')
                 print('Password: ' + raw_password)
                 print('Sha256: ' + password)
-                print('Password is written and send.')
+                print('Password is written.')
+                pm.send_request_data(raw_password)
+                print('\n\r')
             elif sign == 'e':
                 break
             else:
